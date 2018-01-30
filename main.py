@@ -4,17 +4,18 @@ from datetime import *
 
 class Payout():
     def __init__(self, hour, minute):
-        self.payTime = time(hour, minute)
+        self.payTime = datetime(MINYEAR,1,1,hour,minute,0,0)
     users = []
 
-myPayout = Payout(17, 30)
-#print ("Payout time: " + myPayout.payTime.isoformat())
+myPayout = Payout(18, 00)
 
 print ("Payout time: " + str(myPayout.payTime))
 
-currentTime = datetime.now()
+currentDay = datetime.now()
+currentTime = time(currentDay.hour, currentDay.minute)
 
-delta_hours = myPayout.payTime.hour - currentTime.hour
-delta_minutes = myPayout.payTime.minute - currentTime.minute + 60
+diff = myPayout.payTime - currentDay
+hours = divmod(diff.seconds, 3600)
+minutes = divmod(hours[1], 60)
 
-print ("Time until payout: " + str(delta_hours) + ":" + str(delta_minutes))
+print (str(hours[0]) + ":" + str(minutes[0]))
